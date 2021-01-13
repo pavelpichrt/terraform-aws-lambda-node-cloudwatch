@@ -13,14 +13,17 @@ The module will:
 * create a zip file from the handler directory (`var.handler_path`) in `var.build_dir_rel_path` (`dist` by default),
 
 ### Resources
-* lambda function
-* IAM role with assume role and minimal CloudWatch policies.
+* Lambda function
+* IAM role with AssumeRole and minimal CloudWatch policies.
 * NodeJs layer
+* CloudWatch log group `/aws/lambda/"${var.function_name}-${var.env}"`
 
 ## Directory structure
 Is configurable via input parameters, by default the following structure is assumed:
 
 ```bash
+main.tf
+variables.tf
 /src
   /handler
     /exports.js
@@ -34,7 +37,7 @@ Is configurable via input parameters, by default the following structure is assu
 ## Examples
 
 ### ./src/handler/exports.js
-This is default handler path and name.
+This is the default handler path and name.
 
 ```javascript
 const shortid = require('shortid');
