@@ -36,7 +36,7 @@ variable "memory_size" {
 
 variable "timeout" {
   default     = "3"
-  description = "same as aws_lambda_function resourceg"
+  description = "same as aws_lambda_function resource"
 }
 
 variable "reserved_concurrent_executions" {
