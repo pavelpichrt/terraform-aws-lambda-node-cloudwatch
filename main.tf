@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "test_lambda_assume_role_policy" {
   }
 }
 
-resource "aws_iam_role" "apps_lambda_role" {
+resource "aws_iam_role" "lambda_role" {
   name               = "${var.function_name}-${var.env}-lambdaRole"
   assume_role_policy = data.aws_iam_policy_document.test_lambda_assume_role_policy.json
 }
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
 resource "aws_iam_role_policy" "cloudwatch_policy" {
   name   = "${var.function_name}-${var.env}-cloudwatch-policy"
   policy = data.aws_iam_policy_document.cloudwatch_role_policy_document.json
-  role   = aws_iam_role.apps_lambda_role.id
+  role   = aws_iam_role.lambda_role.id
 }
 
 resource "null_resource" "nodejs_layer" {
@@ -79,20 +79,20 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
   compatible_runtimes = [var.runtime]
 }
 
-data "archive_file" "lambda_test_handler" {
+data "archive_file" "handler" {
   type        = "zip"
   source_dir  = var.handler_path
   output_path = local.handler_zip_name
 }
 
-resource "aws_lambda_function" "test_lambda" {
+resource "aws_lambda_function" "lambda" {
   filename         = local.handler_zip_name
   function_name    = local.function_name
-  role             = aws_iam_role.apps_lambda_role.arn
+  role             = aws_iam_role.lambda_role.arn
   handler          = var.handler
   source_code_hash = filebase64sha256(local.handler_zip_name)
   runtime          = var.runtime
-  depends_on       = [data.archive_file.lambda_test_handler]
+  depends_on       = [data.archive_file.handler]
   layers           = [aws_lambda_layer_version.nodejs_layer.arn]
 
   environment {
