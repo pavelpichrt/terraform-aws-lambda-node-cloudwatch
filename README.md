@@ -55,24 +55,8 @@ exports.handler = async (event, context) => {
 ```terraform
 module "lambda-node-cloudwatch" {
   source  = "pavelpichrt/lambda-node-cloudwatch/aws"
-  version = "0.0.6" # change this to latest
+  version = "0.1.6" # change this to latest
 
   function_name = "my_function"
-}
-```
-
-### All inputs
-```terraform
-module "lambda-node-cloudwatch" {
-  source  = "pavelpichrt/lambda-node-cloudwatch/aws"
-  version = "0.0.6" # change this to latest
-
-  function_name      = "my_function"
-  build_dir_rel_path = "dist"
-  env                = "stg" # Only used for naming and tagging
-  handler            = "exports.handler"
-  handler_path       = "src/handler"
-  layers_path        = "src/layers"
-  runtime            = "nodejs12.x"
 }
 ```
