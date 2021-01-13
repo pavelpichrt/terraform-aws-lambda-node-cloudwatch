@@ -50,20 +50,20 @@ exports.handler = async (event, context) => {
 ```
 
 ### Basic usage
-```
+```terraform
 module "lambda-node-cloudwatch" {
   source  = "pavelpichrt/lambda-node-cloudwatch/aws"
-  version = "0.0.4"
+  version = "0.0.6" # change this to latest
 
   function_name = "my_function"
 }
 ```
 
 ### All inputs
-```
+```terraform
 module "lambda-node-cloudwatch" {
   source  = "pavelpichrt/lambda-node-cloudwatch/aws"
-  version = "0.0.4"
+  version = "0.0.6" # change this to latest
 
   function_name      = "my_function"
   build_dir_rel_path = "dist"
