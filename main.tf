@@ -59,10 +59,6 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
   name   = "${var.function_name}-${var.env}-cloudwatch-policy"
   policy = data.aws_iam_policy_document.cloudwatch_role_policy_document.json
   role   = aws_iam_role.lambda_role.id
-
-  tags = {
-    ENV = var.env
-  }
 }
 
 resource "null_resource" "nodejs_layer" {
@@ -73,10 +69,6 @@ resource "null_resource" "nodejs_layer" {
 
   triggers = {
     rerun_every_time = uuid()
-  }
-
-  tags = {
-    ENV = var.env
   }
 }
 
