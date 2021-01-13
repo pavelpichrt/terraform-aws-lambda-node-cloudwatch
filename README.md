@@ -27,7 +27,6 @@ variables.tf
     /exports.js
   /layers
     /nodejs
-      /node_modules
       /package.json
 ```
 
