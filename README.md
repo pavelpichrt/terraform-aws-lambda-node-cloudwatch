@@ -8,7 +8,7 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 The module will:
 
 ### NodeJs
-* run `npm install` in the layers path (configurable, by default `${path.root}/src/layers/nodejs`),
+* run `npm install` in the layers path (`${path.root}/src/layers/nodejs` by default),
 * create a zip file from the layers directory (`"path.root/var.layers_path`) in `var.build_dir_rel_path` (`dist` by default),
 * create a zip file from the handler directory (`var.handler_path`) in `var.build_dir_rel_path` (`dist` by default),
 
@@ -33,7 +33,7 @@ Is configurable via input parameters, by default the following structure is assu
 
 ## Examples
 
-### apps-poc-stream-extractor/src/handler/exports.js
+### ./src/handler/exports.js
 This is default handler path and name.
 
 ```javascript
