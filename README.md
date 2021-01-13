@@ -16,7 +16,8 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 * aws_iam_role_policy.cloudwatch_policy
 * aws_lambda_function.lambda
 * aws_lambda_layer_version.nodejs_layer
-( null_resource.nodejs_layer
+* null_resource.nodejs_layer
+
 ## Directory structure
 Is configurable via input parameters, by default the following structure is assumed:
 
