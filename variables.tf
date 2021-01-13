@@ -19,7 +19,6 @@ variable "layers_path" {
   default     = "src/layers"
   description = "Relative path from 'path.root' to the layers directory"
 }
-
 variable "build_dir_rel_path" {
   default     = "dist"
   description = "Relative path from 'path.root' to the build directory (you probably want to add this to .gitignore)"
@@ -29,3 +28,21 @@ variable "env" {
   default     = "dev"
   description = "Only serves for naming/tagging"
 }
+
+variable "memory_size" {
+  default     = "128"
+  description = "same as aws_lambda_function resource"
+}
+
+variable "timeout" {
+  default     = "3"
+  description = "same as aws_lambda_function resourceg"
+}
+
+variable "reserved_concurrent_executions" {
+  default     = "-1"
+  description = "same as aws_lambda_function resource"
+}
+
+
+
