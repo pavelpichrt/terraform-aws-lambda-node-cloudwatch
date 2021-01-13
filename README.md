@@ -7,8 +7,8 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 ## What does it do?
 ### NodeJS
 * runs `npm install` in the layers path (`${path.root}/src/layers/nodejs` by default),
-* creates a zip file from the layers directory (`"path.root/var.layers_path`) in `var.build_dir_rel_path` (`dist` by default),
-* creates a zip file from the handler directory (`var.handler_path`) in `var.build_dir_rel_path` (`dist` by default),
+* creates a zip file from the layers directory (`"path.root/var.layers_path`) in `./dist` by default,
+* creates a zip file from the handler directory (`var.handler_path`) in `./dist` by default,
 
 ### Resources
 * Lambda function
