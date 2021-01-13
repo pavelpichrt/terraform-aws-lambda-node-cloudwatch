@@ -4,18 +4,16 @@ A terraform module to abstract common setup for Lambda with a Node.js layer and 
 
 Full docs available in [terraform registry](https://registry.terraform.io/modules/pavelpichrt/lambda-node-cloudwatch/aws/latest).
 
-## How does it work?
-The module will:
-
-### NodeJs
-* run `npm install` in the layers path (`${path.root}/src/layers/nodejs` by default),
-* create a zip file from the layers directory (`"path.root/var.layers_path`) in `var.build_dir_rel_path` (`dist` by default),
-* create a zip file from the handler directory (`var.handler_path`) in `var.build_dir_rel_path` (`dist` by default),
+## What does it do?
+### NodeJS
+* runs `npm install` in the layers path (`${path.root}/src/layers/nodejs` by default),
+* creates a zip file from the layers directory (`"path.root/var.layers_path`) in `var.build_dir_rel_path` (`dist` by default),
+* creates a zip file from the handler directory (`var.handler_path`) in `var.build_dir_rel_path` (`dist` by default),
 
 ### Resources
 * Lambda function
 * IAM role with AssumeRole and minimal CloudWatch policies.
-* NodeJs layer
+* NodeJS layer
 * CloudWatch log group `/aws/lambda/"${var.function_name}-${var.env}"`
 
 ## Directory structure
@@ -31,7 +29,6 @@ variables.tf
     /nodejs
       /node_modules
       /package.json
-      /package-lock.json
 ```
 
 ## Examples
@@ -40,6 +37,7 @@ variables.tf
 This is the default handler path and name.
 
 ```javascript
+// Make sure shortid is available in src/layers/nodejs/package.json (by default)
 const shortid = require('shortid');
 
 exports.handler = async (event, context) => {
