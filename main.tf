@@ -85,10 +85,6 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
   filename            = local.layers_zip_name
   source_code_hash    = data.archive_file.nodejs_layer_package.output_base64sha256
   compatible_runtimes = [var.runtime]
-
-  tags = {
-    ENV = var.env
-  }
 }
 
 data "archive_file" "handler" {
