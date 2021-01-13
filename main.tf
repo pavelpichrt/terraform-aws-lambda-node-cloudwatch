@@ -21,11 +21,19 @@ data "aws_iam_policy_document" "test_lambda_assume_role_policy" {
 resource "aws_iam_role" "lambda_role" {
   name               = "${var.function_name}-${var.env}-lambdaRole"
   assume_role_policy = data.aws_iam_policy_document.test_lambda_assume_role_policy.json
+
+  tags = {
+    ENV = var.env
+  }
 }
 
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
   name = "/aws/lambda/${local.function_name}"
+
+  tags = {
+    ENV = var.env
+  }
 }
 
 data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
@@ -51,6 +59,10 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
   name   = "${var.function_name}-${var.env}-cloudwatch-policy"
   policy = data.aws_iam_policy_document.cloudwatch_role_policy_document.json
   role   = aws_iam_role.lambda_role.id
+
+  tags = {
+    ENV = var.env
+  }
 }
 
 resource "null_resource" "nodejs_layer" {
@@ -61,6 +73,10 @@ resource "null_resource" "nodejs_layer" {
 
   triggers = {
     rerun_every_time = uuid()
+  }
+
+  tags = {
+    ENV = var.env
   }
 }
 
@@ -77,6 +93,10 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
   filename            = local.layers_zip_name
   source_code_hash    = data.archive_file.nodejs_layer_package.output_base64sha256
   compatible_runtimes = [var.runtime]
+
+  tags = {
+    ENV = var.env
+  }
 }
 
 data "archive_file" "handler" {
@@ -99,5 +119,9 @@ resource "aws_lambda_function" "lambda" {
     variables = {
       ENV = var.env
     }
+  }
+
+  tags = {
+    ENV = var.env
   }
 }
