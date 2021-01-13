@@ -11,11 +11,12 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 * creates a zip file from the handler directory (`var.handler_path`) in `./dist` by default,
 
 ### Resources
-* Lambda function
-* IAM role with AssumeRole and minimal CloudWatch policies.
-* NodeJS layer
-* CloudWatch log group `/aws/lambda/"${var.function_name}-${var.env}"`
-
+* aws_cloudwatch_log_group.lambda_log_group (`/aws/lambda/"${var.function_name}-${var.env}"`)
+* aws_iam_role.lambda_role
+* aws_iam_role_policy.cloudwatch_policy
+* aws_lambda_function.lambda
+* aws_lambda_layer_version.nodejs_layer
+( null_resource.nodejs_layer
 ## Directory structure
 Is configurable via input parameters, by default the following structure is assumed:
 
