@@ -43,6 +43,7 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
     actions = [
       "logs:CreateLogStream",
       "logs:CreateLogGroup",
+      "logs:PutLogEvents",
     ]
 
     resources = [aws_cloudwatch_log_group.lambda_log_group.arn]
