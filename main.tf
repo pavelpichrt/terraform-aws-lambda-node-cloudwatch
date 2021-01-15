@@ -46,13 +46,19 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
       "logs:CreateLogGroup",
     ]
 
-    resources = [aws_cloudwatch_log_group.lambda_log_group.arn]
+    resources = [
+      aws_cloudwatch_log_group.lambda_log_group.arn,
+      "${aws_cloudwatch_log_group.lambda_log_group.arn}:log-stream:*",
+    ]
   }
 
   statement {
-    effect    = "Allow"
-    actions   = ["logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.lambda_log_group.arn}:*"]
+    effect  = "Allow"
+    actions = ["logs:PutLogEvents"]
+    resources = [
+      "${aws_cloudwatch_log_group.lambda_log_group.arn}:*",
+      "${aws_cloudwatch_log_group.lambda_log_group.arn}:log-stream:*",
+    ]
   }
 }
 
@@ -117,3 +123,31 @@ resource "aws_lambda_function" "lambda" {
     ENV = var.env
   }
 }
+
+# {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#         {
+#             "Sid": "VisualEditor0",
+#             "Effect": "Allow",
+#             "Action": [
+#                 "logs:CreateLogStream",
+#                 "logs:CreateLogGroup",
+#                 "logs:PutLogEvents"
+#             ],
+#             "Resource": [
+#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:log-stream:*",
+#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev"
+#             ]
+#         },
+#         {
+#             "Sid": "VisualEditor1",
+#             "Effect": "Allow",
+#             "Action": "logs:PutLogEvents",
+#             "Resource": [
+#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:*",
+#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:log-stream:*"
+#             ]
+#         }
+#     ]
+# }
