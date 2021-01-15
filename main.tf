@@ -29,7 +29,8 @@ resource "aws_iam_role" "lambda_role" {
 
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name = "/aws/lambda/${local.function_name}"
+  name              = "/aws/lambda/${local.function_name}"
+  retention_in_days = 60
 
   tags = {
     ENV = var.env
@@ -43,7 +44,6 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
     actions = [
       "logs:CreateLogStream",
       "logs:CreateLogGroup",
-      "logs:PutLogEvents",
     ]
 
     resources = [aws_cloudwatch_log_group.lambda_log_group.arn]
