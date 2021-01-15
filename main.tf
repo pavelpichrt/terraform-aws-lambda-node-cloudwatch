@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "test_lambda_assume_role_policy" {
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name               = "${var.function_name}-${var.env}-lambdaRole"
+  name               = "${var.function_name}-${var.env}-lambda"
   assume_role_policy = data.aws_iam_policy_document.test_lambda_assume_role_policy.json
 
   tags = {
@@ -123,31 +123,3 @@ resource "aws_lambda_function" "lambda" {
     ENV = var.env
   }
 }
-
-# {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Sid": "VisualEditor0",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "logs:CreateLogStream",
-#                 "logs:CreateLogGroup",
-#                 "logs:PutLogEvents"
-#             ],
-#             "Resource": [
-#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:log-stream:*",
-#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev"
-#             ]
-#         },
-#         {
-#             "Sid": "VisualEditor1",
-#             "Effect": "Allow",
-#             "Action": "logs:PutLogEvents",
-#             "Resource": [
-#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:*",
-#                 "arn:aws:logs:eu-west-2:133698537159:log-group:/aws/lambda/poc_stream_extractor-dev:log-stream:*"
-#             ]
-#         }
-#     ]
-# }
