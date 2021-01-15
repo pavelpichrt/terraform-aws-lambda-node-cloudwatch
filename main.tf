@@ -42,22 +42,22 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
     effect = "Allow"
 
     actions = [
-      "logs:CreateLogStream",
       "logs:CreateLogGroup",
     ]
 
     resources = [
       aws_cloudwatch_log_group.lambda_log_group.arn,
-      "${aws_cloudwatch_log_group.lambda_log_group.arn}:log-stream:*",
     ]
   }
 
   statement {
-    effect  = "Allow"
-    actions = ["logs:PutLogEvents"]
+    effect = "Allow"
+    actions = [
+      "logs:PutLogEvents",
+      "logs:CreateLogStream",
+    ]
     resources = [
       "${aws_cloudwatch_log_group.lambda_log_group.arn}:*",
-      "${aws_cloudwatch_log_group.lambda_log_group.arn}:log-stream:*",
     ]
   }
 }
