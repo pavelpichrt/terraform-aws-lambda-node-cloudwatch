@@ -114,9 +114,7 @@ resource "aws_lambda_function" "lambda" {
   reserved_concurrent_executions = var.reserved_concurrent_executions
 
   environment {
-    variables = {
-      ENV = var.env
-    }
+    variables = var.env_vars
   }
 
   tags = {

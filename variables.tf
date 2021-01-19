@@ -43,3 +43,9 @@ variable "reserved_concurrent_executions" {
   default     = "-1"
   description = "same as aws_lambda_function resource"
 }
+
+variable "env_vars" {
+  default     = {}
+  description = "same as aws_lambda_function resource.environment.variables"
+}
+
