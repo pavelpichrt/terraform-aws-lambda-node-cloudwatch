@@ -46,6 +46,7 @@ variable "reserved_concurrent_executions" {
 
 variable "env_vars" {
   default     = {}
+  type        = map(string)
   description = "same as aws_lambda_function resource.environment.variables"
 }
 
