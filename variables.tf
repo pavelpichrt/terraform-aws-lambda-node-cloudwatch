@@ -6,7 +6,7 @@ variable "runtime" {
 }
 
 variable "handler" {
-  default     = "exports.handler"
+  default     = "index.handler"
   description = "Name of the exported handler function"
 }
 
