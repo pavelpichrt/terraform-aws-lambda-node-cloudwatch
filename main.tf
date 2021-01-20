@@ -103,7 +103,7 @@ data "null_resource" "nodejs_layer_cleanup" {
     EOT
   }
 
-  depends_on = [archive_file.nodejs_layer_package]
+  depends_on = [data.archive_file.nodejs_layer_package]
 }
 
 resource "aws_lambda_layer_version" "nodejs_layer" {
