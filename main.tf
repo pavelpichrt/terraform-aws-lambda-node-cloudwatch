@@ -93,7 +93,7 @@ data "archive_file" "nodejs_layer_package" {
   depends_on = [null_resource.nodejs_layer]
 }
 
-data "null_resource" "nodejs_layer_cleanup" {
+resource "null_resource" "nodejs_layer_cleanup" {
   provisioner "local-exec" {
     command = "rm -rf ${local.layers_path}"
   }
