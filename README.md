@@ -36,7 +36,7 @@ variables.tf
 
 ## Examples
 
-### ./src/handler/exports.js
+### ./src/handler/index.js
 
 This is the default handler path and name.
 
