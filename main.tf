@@ -71,7 +71,7 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
 resource "null_resource" "nodejs_layer" {
   provisioner "local-exec" {
     command = <<EOT
-      rm -rfv ${local.layers_path}/nodejs/* && \
+      rm -rf ${local.layers_path}/nodejs/node_modules && \
       cp -t ${local.layers_path}/nodejs package.json package-lock-json && \
       cd ${local.layers_path}/nodejs \
       npm ci
