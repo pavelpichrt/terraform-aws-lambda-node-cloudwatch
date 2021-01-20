@@ -28,7 +28,7 @@ Is configurable via input parameters, by default the following structure is assu
 ```bash
 main.tf
 variables.tf
-/package.json
+package.json
 /src
   /handler
     /index.js
