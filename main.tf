@@ -75,7 +75,7 @@ resource "null_resource" "nodejs_layer" {
       rm -rf ${local.node_layer_path}/node_modules && \
       cp ./{package.json,package-lock.json} ${local.node_layer_path} && \
       cd ${local.node_layer_path} && \
-      npm ci
+      NODE_ENV=production npm ci
     EOT
   }
 
