@@ -8,9 +8,8 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 
 ### NodeJS
 
-- copies `package.json` and `package-lock.json` into the layers directory and runs `npm ci`,
-- creates a zip file from the layers directory in `./dist` by default,
-- creates a zip file from the handler directory (`var.handler_path`) in `./dist` by default,
+- runs `npm ci`,
+- creates a zip file from the handler directory (`var.handler_path`) and a NodeJS layer in `./dist` by default,
 
 ### Resources
 
