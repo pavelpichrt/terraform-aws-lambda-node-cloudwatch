@@ -2,6 +2,7 @@ locals {
   build_directory_path = "${path.root}/${var.build_dir_rel_path}"
   handler_zip_name     = "${var.build_dir_rel_path}/handler.zip"
   layers_path          = "${path.root}/${var.layers_path}"
+  node_layer_path      = "${local.layers_path}/nodejs"
   layers_zip_name      = "${var.build_dir_rel_path}/nodejs.zip"
   function_name        = "${var.function_name}-${var.env}"
 }
@@ -71,9 +72,9 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
 resource "null_resource" "nodejs_layer" {
   provisioner "local-exec" {
     command = <<EOT
-      rm -rf ${local.layers_path}/nodejs/node_modules && \
-      cp -t ${local.layers_path}/nodejs package.json package-lock-json && \
-      cd ${local.layers_path}/nodejs \
+      rm -rf ${local.node_layer_path}/node_modules && \
+      cp ./{package.json,package-lock.json} ${local.node_layer_path} && \
+      cd ${local.node_layer_path} \
       npm ci
     EOT
   }
