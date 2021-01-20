@@ -70,8 +70,12 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
 
 resource "null_resource" "nodejs_layer" {
   provisioner "local-exec" {
-    # working_dir = "${local.layers_path}/nodejs"
-    command = "NODE_ENV=production npm install && cp -r ./node_modules ${local.layers_path}/nodejs"
+    command = <<EOT
+      rm -rfv ${local.layers_path}/nodejs/* && \
+      cp -t ${local.layers_path}/nodejs package.json package-lock-json && \
+      cd ${local.layers_path}/nodejs \
+      npm ci
+    EOT
   }
 
   triggers = {
