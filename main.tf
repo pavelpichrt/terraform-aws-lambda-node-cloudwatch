@@ -72,7 +72,7 @@ resource "aws_iam_role_policy" "cloudwatch_policy" {
 resource "null_resource" "nodejs_layer" {
   provisioner "local-exec" {
     command = <<EOT
-      rm -rf ${layers_path} && \
+      rm -rf ${local.layers_path} && \
       mkdir -p ${local.node_layer_path} && \
       cp ./{package.json,package-lock.json} ${local.node_layer_path} && \
       cd ${local.node_layer_path} && \
@@ -95,12 +95,7 @@ data "archive_file" "nodejs_layer_package" {
 
 data "null_resource" "nodejs_layer_cleanup" {
   provisioner "local-exec" {
-    command = <<EOT
-      rm -rf ${local.node_layer_path}/node_modules && \
-      cp ./{package.json,package-lock.json} ${local.node_layer_path} && \
-      cd ${local.node_layer_path} && \
-      NODE_ENV=production npm ci
-    EOT
+    command = "rm -rf ${local.layers_path}"
   }
 
   depends_on = [data.archive_file.nodejs_layer_package]
