@@ -8,8 +8,8 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 
 ### NodeJS
 
-- runs `npm install` in the layers path (`${path.root}/src/layers/nodejs` by default),
-- creates a zip file from the layers directory (`"path.root/var.layers_path`) in `./dist` by default,
+- copies `package.json` and `package-lock.json` into the layers directory and runs `npm ci`,
+- creates a zip file from the layers directory in `./dist` by default,
 - creates a zip file from the handler directory (`var.handler_path`) in `./dist` by default,
 
 ### Resources
@@ -41,7 +41,7 @@ variables.tf
 This is the default handler path and name.
 
 ```javascript
-// Make sure shortid is available in src/layers/nodejs/package.json (by default)
+// Make sure shortid is available in ./package.json
 const shortid = require("shortid");
 
 exports.handler = async (event, context) => {
@@ -59,7 +59,7 @@ exports.handler = async (event, context) => {
 ```terraform
 module "lambda-node-cloudwatch" {
   source  = "pavelpichrt/lambda-node-cloudwatch/aws"
-  version = "0.1.6" # change this to latest
+  version = "0.2.10" # change this to latest
 
   function_name = "my_function"
 }
