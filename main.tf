@@ -115,24 +115,24 @@ data "archive_file" "handler" {
   output_path = local.handler_zip_name
 }
 
-resource "aws_lambda_function" "lambda" {
-  filename                       = local.handler_zip_name
-  function_name                  = local.function_name
-  role                           = aws_iam_role.lambda_role.arn
-  handler                        = var.handler
-  source_code_hash               = filebase64sha256(local.handler_zip_name)
-  runtime                        = var.runtime
-  layers                         = [aws_lambda_layer_version.nodejs_layer.arn]
-  timeout                        = var.timeout
-  memory_size                    = var.memory_size
-  reserved_concurrent_executions = var.reserved_concurrent_executions
-  depends_on                     = [data.archive_file.handler]
+# resource "aws_lambda_function" "lambda" {
+#   filename                       = local.handler_zip_name
+#   function_name                  = local.function_name
+#   role                           = aws_iam_role.lambda_role.arn
+#   handler                        = var.handler
+#   source_code_hash               = filebase64sha256(local.handler_zip_name)
+#   runtime                        = var.runtime
+#   layers                         = [aws_lambda_layer_version.nodejs_layer.arn]
+#   timeout                        = var.timeout
+#   memory_size                    = var.memory_size
+#   reserved_concurrent_executions = var.reserved_concurrent_executions
+#   depends_on                     = [data.archive_file.handler]
 
-  environment {
-    variables = var.env_vars
-  }
+#   environment {
+#     variables = var.env_vars
+#   }
 
-  tags = {
-    ENV = var.env
-  }
-}
+#   tags = {
+#     ENV = var.env
+#   }
+# }
