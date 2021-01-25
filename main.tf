@@ -74,7 +74,7 @@ resource "null_resource" "nodejs_layer" {
     command = <<EOT
       rm -rf ${local.layers_path} && \
       mkdir -p ${local.node_layer_path} && \
-      cp ./{package.json,package-lock.json} ${local.node_layer_path} && \
+      cp ../{package.json,package-lock.json} ${local.node_layer_path} && \
       cd ${local.node_layer_path} && \
       NODE_ENV=production npm ci
     EOT
