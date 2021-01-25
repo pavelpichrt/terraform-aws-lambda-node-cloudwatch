@@ -111,7 +111,7 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
 
 data "archive_file" "handler" {
   type        = "zip"
-  source_dir  = "${var.proj_root_relative_path}/${var.handler_path}"
+  source_dir  = "${path.root}/${var.proj_root_relative_path}/${var.handler_path}"
   output_path = local.handler_zip_name
 }
 
@@ -122,11 +122,11 @@ resource "aws_lambda_function" "lambda" {
   handler                        = var.handler
   source_code_hash               = filebase64sha256(local.handler_zip_name)
   runtime                        = var.runtime
-  depends_on                     = [data.archive_file.handler]
   layers                         = [aws_lambda_layer_version.nodejs_layer.arn]
   timeout                        = var.timeout
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
+  depends_on                     = [data.archive_file.handler]
 
   environment {
     variables = var.env_vars
