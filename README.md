@@ -9,7 +9,7 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 ### NodeJS
 
 - runs `npm ci`,
-- creates a zip file from the handler directory (`var.handler_path`) and a NodeJS layer in `./dist` by default,
+- creates a zip file from the handler directory (`var.handler_path`) and a NodeJS layer.
 
 ### Resources
 
@@ -25,8 +25,9 @@ Full docs available in [terraform registry](https://registry.terraform.io/module
 Is configurable via input parameters, by default the following structure is assumed:
 
 ```bash
-main.tf
-variables.tf
+infra/
+  /main.tf
+  /variables.tf
 package.json
 /src
   /handler
