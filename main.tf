@@ -115,7 +115,7 @@ data "archive_file" "handler" {
   output_path = local.handler_zip_name
 }
 
-# resource "aws_lambda_function" "lambda" {
+#  resource "aws_lambda_function" "lambda" {
 #   filename                       = local.handler_zip_name
 #   function_name                  = local.function_name
 #   role                           = aws_iam_role.lambda_role.arn
