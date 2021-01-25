@@ -120,7 +120,7 @@ resource "aws_lambda_function" "lambda" {
   function_name                  = local.function_name
   role                           = aws_iam_role.lambda_role.arn
   handler                        = var.handler
-  source_code_hash               = filebase64sha256(local.handler_zip_name)
+  source_code_hash               = filebase64sha256(data.archive_file.handler.output_path)
   runtime                        = var.runtime
   layers                         = [aws_lambda_layer_version.nodejs_layer.arn]
   timeout                        = var.timeout
