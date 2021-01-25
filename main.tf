@@ -75,7 +75,7 @@ resource "null_resource" "nodejs_layer" {
     command = <<EOT
       rm -rf ${local.layers_path} && \
       mkdir -p ${local.node_layer_path} && \
-      cp ${proj_root_relative_path}/{package.json,package-lock.json} ${local.node_layer_path} && \
+      cp ${var.proj_root_relative_path}/{package.json,package-lock.json} ${local.node_layer_path} && \
       cd ${local.node_layer_path} && \
       NODE_ENV=production npm ci
     EOT
@@ -111,7 +111,7 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
 
 data "archive_file" "handler" {
   type        = "zip"
-  source_dir  = "${proj_root_relative_path}/${var.handler_path}"
+  source_dir  = "${var.proj_root_relative_path}/${var.handler_path}"
   output_path = local.handler_zip_name
 }
 
