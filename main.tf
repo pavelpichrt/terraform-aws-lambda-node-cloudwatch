@@ -1,9 +1,10 @@
 locals {
-  build_directory_path = "${path.root}/${var.build_dir_rel_path}"
-  handler_zip_name     = "${var.build_dir_rel_path}/handler.zip"
-  layers_path          = "${path.root}/${var.layers_path}"
+  build_dir_rel_path   = "dist"
+  build_directory_path = "${path.root}/${local.build_dir_rel_path}"
+  handler_zip_name     = "${local.build_dir_rel_path}/handler.zip"
+  layers_path          = "${path.root}/src/layers"
   node_layer_path      = "${local.layers_path}/nodejs"
-  layers_zip_name      = "${var.build_dir_rel_path}/nodejs.zip"
+  layers_zip_name      = "${local.build_dir_rel_path}/nodejs.zip"
   function_name        = "${var.function_name}-${var.env}"
 }
 
@@ -74,7 +75,7 @@ resource "null_resource" "nodejs_layer" {
     command = <<EOT
       rm -rf ${local.layers_path} && \
       mkdir -p ${local.node_layer_path} && \
-      cp ../{package.json,package-lock.json} ${local.node_layer_path} && \
+      cp ${proj_root_relative_path}/{package.json,package-lock.json} ${local.node_layer_path} && \
       cd ${local.node_layer_path} && \
       NODE_ENV=production npm ci
     EOT
@@ -110,7 +111,7 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
 
 data "archive_file" "handler" {
   type        = "zip"
-  source_dir  = var.handler_path
+  source_dir  = "${proj_root_relative_path}/${var.handler_path}"
   output_path = local.handler_zip_name
 }
 

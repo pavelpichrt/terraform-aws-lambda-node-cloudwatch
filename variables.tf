@@ -10,18 +10,14 @@ variable "handler" {
   description = "Name of the exported handler function"
 }
 
+variable "proj_root_relative_path" {
+  default     = ".."
+  description = "Relative path from 'path.root' project root"
+}
+
 variable "handler_path" {
   default     = "src/handler"
   description = "Relative path from 'path.root' to the handler directory"
-}
-
-variable "layers_path" {
-  default     = "src/layers"
-  description = "Relative path from 'path.root' to the layers directory"
-}
-variable "build_dir_rel_path" {
-  default     = "dist"
-  description = "Relative path from 'path.root' to the build directory (you probably want to add this to .gitignore)"
 }
 
 variable "env" {
