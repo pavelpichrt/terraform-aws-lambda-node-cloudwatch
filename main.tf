@@ -5,7 +5,6 @@ locals {
   layers_path          = "${path.root}/src/layers"
   node_layer_path      = "${local.layers_path}/nodejs"
   layers_zip_name      = "${local.build_dir_rel_path}/nodejs.zip"
-  function_name        = "${var.function_name}-${var.env}"
 }
 
 data "aws_iam_policy_document" "test_lambda_assume_role_policy" {
@@ -21,22 +20,14 @@ data "aws_iam_policy_document" "test_lambda_assume_role_policy" {
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name               = "${var.function_name}-${var.env}-lambda"
+  name               = "${var.function_name}-lambda"
   assume_role_policy = data.aws_iam_policy_document.test_lambda_assume_role_policy.json
-
-  tags = {
-    ENV = var.env
-  }
 }
 
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name              = "/aws/lambda/${local.function_name}"
+  name              = "/aws/lambda/${var.function_name}"
   retention_in_days = 60
-
-  tags = {
-    ENV = var.env
-  }
 }
 
 data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
@@ -65,7 +56,7 @@ data "aws_iam_policy_document" "cloudwatch_role_policy_document" {
 }
 
 resource "aws_iam_role_policy" "cloudwatch_policy" {
-  name   = "${var.function_name}-${var.env}-cloudwatch-policy"
+  name   = "${var.function_name}-policy"
   policy = data.aws_iam_policy_document.cloudwatch_role_policy_document.json
   role   = aws_iam_role.lambda_role.id
 }
@@ -117,7 +108,7 @@ data "archive_file" "handler" {
 
 resource "aws_lambda_function" "lambda" {
   filename                       = local.handler_zip_name
-  function_name                  = local.function_name
+  function_name                  = var.function_name
   role                           = aws_iam_role.lambda_role.arn
   handler                        = var.handler
   source_code_hash               = filebase64sha256(data.archive_file.handler.output_path)
@@ -130,9 +121,5 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = var.env_vars
-  }
-
-  tags = {
-    ENV = var.env
   }
 }
